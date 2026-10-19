@@ -1,0 +1,32 @@
+{
+  "name": "@pipeworx/mcp-wipo-pearl",
+  "version": "0.1.0",
+  "description": "WIPO Pearl MCP — scientific, technical and IP legal terminology database.",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "bin": {
+    "mcp-wipo-pearl": "bin/cli.js"
+  },
+  "keywords": ["mcp", "mcp-server", "model-context-protocol", "pipeworx", "wipo-pearl"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pipeworx-io/mcp-wipo-pearl.git"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "tsx": "^4.19.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "@cloudflare/workers-types": "^4.20260405.1"
+  },
+  "pipeworx": {
+    "sourceHash": "v1-ae44bc65702102b8909fc7c80834460cfaef732f462f79d4064a67f0745cd940",
+    "sourceCommit": "351c40908821cfecc9bb2f5849d87bbfdbb26d75"
+  }
+}
