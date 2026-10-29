@@ -1,0 +1,188 @@
+[
+  {
+    "name": "pearl_search_terms",
+    "description": "Search WIPO Pearl for a scientific, technical, or IP legal term and get back matching concept records (concept id, the matched term text, subject field). Use `pearl_concept` on a returned concept_id to get the full record: validated equivalents in other languages, reliability rating, defining context and source. Example: pearl_search_terms({ term: \"inter partes review\", target_languages: [\"FR\", \"JA\"], subject_field: \"LEGL\" }).",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "term": {
+          "type": "string",
+          "description": "The word or phrase to search for, e.g. \"circuit\" or \"inter partes review\"."
+        },
+        "source_language": {
+          "type": "string",
+          "description": "ISO 639-1 language the term itself is in: AR, DE, EN, ES, FR, JA, KO, PT, RU, ZH. Omit to search across all languages."
+        },
+        "target_languages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "ISO 639-1 languages to return equivalents in (subset of AR, DE, EN, ES, FR, JA, KO, PT, RU, ZH). Omit for all available."
+        },
+        "subject_field": {
+          "type": "string",
+          "description": "Restrict to one WIPO Pearl subject-field code (see pearl_subject_fields for the full list), e.g. \"LEGL\", \"CHEM\", \"ELEC\". Omit to search every field."
+        },
+        "abbreviation": {
+          "type": "boolean",
+          "description": "Search only for abbreviations."
+        },
+        "exact_search": {
+          "type": "boolean",
+          "description": "Match the search term exactly rather than fuzzily."
+        },
+        "limit": {
+          "type": "number",
+          "description": "Maximum concept records to return (default 10, max 50)."
+        },
+        "_apiKey": {
+          "type": "string",
+          "description": "Optional. Pipeworx supplies a WIPO Business Partner Portal credential automatically. Pass your own as JSON: '{\"client_id\":\"...\",\"client_secret\":\"...\"}' to use a dedicated subscription instead."
+        }
+      },
+      "required": [
+        "term"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "term": {
+          "type": "string"
+        },
+        "source_language": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "target_languages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "subject_field": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "hits": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "returned": {
+          "type": "number"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "term",
+        "returned",
+        "results",
+        "source"
+      ]
+    }
+  },
+  {
+    "name": "pearl_concept",
+    "description": "Retrieve the full WIPO Pearl database record for one concept_id (from pearl_search_terms): validated term equivalents grouped by language, each with a reliability rating, a defining context, a usage note, and its source. Example: pearl_concept({ concept_id: \"8818607\" }).",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "concept_id": {
+          "type": "string",
+          "description": "The record id returned by pearl_search_terms, e.g. \"8818607\"."
+        },
+        "lang_code": {
+          "type": "string",
+          "description": "Optional: restrict the record to one ISO 639-1 language (AR, DE, EN, ES, FR, JA, KO, PT, RU, ZH)."
+        },
+        "_apiKey": {
+          "type": "string",
+          "description": "Optional. Pipeworx supplies a WIPO Business Partner Portal credential automatically. Pass your own as JSON: '{\"client_id\":\"...\",\"client_secret\":\"...\"}' to use a dedicated subscription instead."
+        }
+      },
+      "required": [
+        "concept_id"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "concept_id": {
+          "type": "string"
+        },
+        "found": {
+          "type": "boolean"
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "concept_id",
+        "found",
+        "groups",
+        "source"
+      ]
+    }
+  },
+  {
+    "name": "pearl_subject_fields",
+    "description": "List the 29 WIPO Pearl subject-field codes (e.g. \"LEGL\" = Legal Matters, \"CHEM\" = Chemical & Materials Technology) and the 10 supported language codes, for use with pearl_search_terms' subject_field/source_language/target_languages arguments. No arguments.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {}
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "subject_fields": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "subject_fields",
+        "languages",
+        "source"
+      ]
+    }
+  }
+]
